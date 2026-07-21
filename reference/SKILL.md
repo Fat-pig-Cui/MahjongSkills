@@ -9,7 +9,9 @@ description: 以雀魂四人麻将段位规则为主的参考资料、规则基�
 
 | 文件 | 说明 |
 |---|---|
-| [rules-sources.md](rules-sources.md) | 雀魂段位规则基线、平台差异与更新核验清单 |
+| [rules-sources.md](rules-sources.md) | 雀魂四人麻将段位规则基线、平台差异与更新核验清单 |
+| [sanma-rules-sources.md](sanma-rules-sources.md) | 雀魂三人麻将段位规则基线、四麻差异与待核验项 |
+| [三人麻将规则差异](../13-sanma/SKILL.md) | 三人麻将独立 SKILL 入口 |
 | [REPORT.md](REPORT.md) | 旧版核心规则汇总；应以各章节和规则基线为准 |
 | [example-hands.md](example-hands.md) | 各役种和牌牌例与反例 |
 | [example-scoring.md](example-scoring.md) | 符数、支付、本场与罚符实例 |

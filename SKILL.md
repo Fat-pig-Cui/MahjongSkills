@@ -5,7 +5,7 @@ description: 以雀魂四人麻将段位规则为主的立直麻将完整规则�
 
 # 立直麻将（Riichi Mahjong）规则体系
 
-本 SKILL 默认讲解**雀魂四人麻将段位场**。三人麻将、比赛房、自定义房与其他平台差异均会明确标注；平台差异和更新核验见 [规则基线](reference/rules-sources.md)。
+本 SKILL 默认讲解**雀魂四人麻将段位场**。三人麻将由 [第13章](13-sanma/SKILL.md) 单独处理；比赛房、自定义房与其他平台差异均会明确标注。四麻平台差异和更新核验见 [规则基线](reference/rules-sources.md)，三麻规则核验见 [三麻规则基线](reference/sanma-rules-sources.md)。
 
 | 章节 | 目录                                                      | 说明                      |
 |---:|---------------------------------------------------------|-------------------------|
@@ -21,11 +21,13 @@ description: 以雀魂四人麻将段位规则为主的立直麻将完整规则�
 | 10 | [10-shanten-efficiency](10-shanten-efficiency/SKILL.md) | 向听、有效牌、受入、听牌质量与牌效率      |
 | 11 | [11-defense-danger](11-defense-danger/SKILL.md)         | 现物、筋、壁、危险度与押回判断         |
 | 12 | [12-strategy-placement](12-strategy-placement/SKILL.md) | 攻守、点数状况、亲番与All Last顺位策略 |
+| 13 | [13-sanma](13-sanma/SKILL.md) | 雀魂三人麻将与四人麻将的规则差异 |
 
 ## Reference
 
 - [参考资料索引](reference/SKILL.md)
-- [规则基线与来源](reference/rules-sources.md)
+- [规则基线与来源（四麻）](reference/rules-sources.md)
+- [规则基线与来源（三麻）](reference/sanma-rules-sources.md)
 - [和牌牌例](reference/example-hands.md)
 - [计分实例](reference/example-scoring.md)
 - [流程示例](reference/example-gameplay.md)
