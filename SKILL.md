@@ -28,6 +28,7 @@ description: 以雀魂四人麻将段位规则为主的立直麻将完整规则�
 - [参考资料索引](reference/SKILL.md)
 - [规则基线与来源（四麻）](reference/rules-sources.md)
 - [规则基线与来源（三麻）](reference/sanma-rules-sources.md)
+- [2026-10-07规则核验记录](reference/verification-2026-10-07.md)
 - [和牌牌例](reference/example-hands.md)
 - [计分实例](reference/example-scoring.md)
 - [流程示例](reference/example-gameplay.md)
