@@ -1,0 +1,117 @@
+{
+  "resource_version": "0.11.252.w",
+  "source": "https://game.maj-soul.com/1/v0.11.252.w/res/config/lqc.lqbin",
+  "sha256": "a5959513fa31d3b5297d2dda400c86c0eacbdb4adad461b583439d7f673c9086",
+  "config_version": "0.0.1",
+  "header_hash": "hash",
+  "tables": {
+    "desktop.matchmode": [
+      {
+        "id": 2,
+        "type": 1,
+        "mode": 1,
+        "room_name_chs": "铜之间",
+        "init_point": 25000,
+        "back_point": 30000
+      },
+      {
+        "id": 3,
+        "type": 1,
+        "mode": 2,
+        "room_name_chs": "铜之间",
+        "init_point": 25000,
+        "back_point": 30000
+      },
+      {
+        "id": 17,
+        "type": 1,
+        "mode": 11,
+        "room_name_chs": "铜之间",
+        "init_point": 35000,
+        "back_point": 40000
+      },
+      {
+        "id": 18,
+        "type": 1,
+        "mode": 12,
+        "room_name_chs": "铜之间",
+        "init_point": 35000,
+        "back_point": 40000
+      },
+      {
+        "id": 19,
+        "type": 1,
+        "mode": 11,
+        "room_name_chs": "银之间",
+        "init_point": 35000,
+        "back_point": 40000
+      },
+      {
+        "id": 20,
+        "type": 1,
+        "mode": 12,
+        "room_name_chs": "银之间",
+        "init_point": 35000,
+        "back_point": 40000
+      },
+      {
+        "id": 21,
+        "type": 1,
+        "mode": 11,
+        "room_name_chs": "金之间",
+        "init_point": 35000,
+        "back_point": 40000
+      },
+      {
+        "id": 22,
+        "type": 1,
+        "mode": 12,
+        "room_name_chs": "金之间",
+        "init_point": 35000,
+        "back_point": 40000
+      }
+    ],
+    "fan.fan": [
+      {
+        "id": 34,
+        "name_chs": "拔北宝牌",
+        "xuanshang": 1,
+        "fan_menqing": 1,
+        "fan_fulu": 1
+      }
+    ],
+    "fandesc.fandesc": [
+      {
+        "id": 116,
+        "name_chs": "北宝牌",
+        "desc_chs": "在三人麻将中，北风在拔北操作后可以被当做宝牌（手牌中不算）",
+        "desc2_chs": "不是役"
+      },
+      {
+        "id": 501,
+        "name_chs": "流局满贯",
+        "desc_chs": "自己的舍张全是幺九牌并且没有被他家吃碰杠的状态下荒牌流局",
+        "desc2_chs": ""
+      }
+    ],
+    "str.str": [
+      {
+        "id": 3,
+        "chs": "起点：25000\r\n西入：南四局结束1位不足30000点西入\r\n场次：半庄\r\n赤宝牌：3张\r\n食断：有\r\n等待时间：5+20"
+      },
+      {
+        "id": 24,
+        "chs": "起点：35000\r\n南入：东三局结束1位不足40000点南入\r\n场次：东风庄\r\n赤宝牌：2张\r\n食断：有\r\n自摸损：有\r\n岭上牌8枚\r\n等待时间：5+20\r\n - 不使用二万-八万的牌\r\n - 不允许“吃”\r\n - 北风牌可以执行“拔北”作为宝牌使用，拔北之后会摸一张岭上牌\r\n - 拔北自摸算岭上开花\r\n - 拔北操作等同于鸣牌（消除一发/地和/九种九牌流局/两立直），不破坏门前清\r\n - 允许在他家拔北时执行抢北和，抢北和不算役\r\n - 北风作为面子时算客风"
+      },
+      {
+        "id": 25,
+        "chs": "起点：35000\r\n西入：南三局结束1位不足40000点西入\r\n场次：半庄\r\n赤宝牌：2张\r\n食断：有\r\n自摸损：有\r\n岭上牌8枚\r\n等待时间：5+20\r\n - 不使用二万-八万的牌\r\n - 不允许“吃”\r\n - 北风牌可以执行“拔北”作为宝牌使用，拔北之后会摸一张岭上牌\r\n - 拔北自摸算岭上开花\r\n - 拔北操作等同于鸣牌（消除一发/地和/九种九牌流局/两立直），不破坏门前清\r\n - 允许在他家拔北时执行抢北和，抢北和不算役\r\n - 北风作为面子时算客风"
+      },
+      {
+        "id": 63,
+        "chs": "自摸损的计分方法是指在三人麻将中自摸的时候，根据四人麻将的算分方法进行计算，然后单纯的舍弃掉北家应该支付的点数。这样会使得自摸的点数相比于荣和的点数低1/3或1/4。\r\n无自摸损则将北家应该支付的点数平分到剩下两家，使得自摸和荣和得点一致。"
+      }
+    ]
+  },
+  "manifest": "https://game.maj-soul.com/1/resversion0.11.252.w.json"
+}

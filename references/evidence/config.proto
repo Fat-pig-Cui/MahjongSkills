@@ -1,0 +1,36 @@
+// Official public ConfigTables envelope, obtained on 2026-10-07 from:
+// https://game.maj-soul.com/1/v0.10.1.w/res/proto/config.proto
+// Comments/whitespace normalized; field definitions preserved.
+syntax = "proto3";
+package lq.config;
+
+message Field {
+  string field_name = 1;
+  uint32 array_length = 2;
+  string pb_type = 3;
+  uint32 pb_index = 4;
+}
+message SheetMeta {
+  string category = 1;
+  string key = 2;
+}
+message SheetSchema {
+  string name = 1;
+  SheetMeta meta = 2;
+  repeated Field fields = 3;
+}
+message TableSchema {
+  string name = 1;
+  repeated SheetSchema sheets = 2;
+}
+message SheetData {
+  string table = 1;
+  string sheet = 2;
+  repeated bytes data = 3;
+}
+message ConfigTables {
+  string version = 1;
+  string header_hash = 2;
+  repeated TableSchema schemas = 3;
+  repeated SheetData datas = 4;
+}
