@@ -21,7 +21,8 @@
 | 规则编号 | 差异的唯一维护位置 | 已有证据 | 当前独立验证 |
 |---|---|---|---|
 | SANMA-TILES | [牌组和役种差异](topics/13-sanma.md#sanma-tiles) | 公开说明、既有基线 | — |
-| SANMA-NORTH | [拔北、抢北和立直后限制](topics/13-sanma.md#north) | 流程公开说明；时序、刚摸牌限制用户确认 | — |
+| SANMA-NORTH | [拔北、抢北和立直后限制](topics/13-sanma.md#north) | 流程公开说明；时序、刚摸牌限制用户确认；[拔北不纳入振听判定用户确认](evidence/furiten-confirmations-2026-10-11.md) | — |
+| RIICHI-FURITEN | [共通振听判定](topics/02-game-flow.md#riichi-furiten)；[响应例外](topics/07-edge-cases.md#furiten-response) | 既有基线；[舍牌与杠／拔北响应的范围用户确认](evidence/furiten-confirmations-2026-10-11.md) | — |
 | SANMA-DORA | [拔北宝牌与表里宝](topics/13-sanma.md#north-dora) | 基础1番公开配置；叠加用户确认 | — |
 | SANMA-PAY | [自摸损与友人房对照](topics/13-sanma.md#sanma-scoring) | 用户确认、公开说明；[无自摸损役满补充确认](evidence/completion-confirmations-2026-10-09.md)；实例离线复算 | — |
 | PAO | [共通包牌规则](topics/05-special-rules.md#pao)；[三麻金额](topics/13-sanma.md#sanma-scoring) | 用户实际验证；[本场来源、三麻适配与验证确认](evidence/pao-confirmations-2026-10-09.md) | [已完成；原始证据待归档](pending-verification.md#v-pao) |

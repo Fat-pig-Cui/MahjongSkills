@@ -22,7 +22,7 @@
 |---|---|---|---|
 | BASIC | [牌组、编码与和牌形](topics/01-basic-composition.md) | 既有基线、用户确认赤牌 | — |
 | FLOW | [局数、本场与普通流局](topics/02-game-flow.md) | 用户确认、既有基线 | — |
-| RIICHI-FURITEN | [立直与振听](topics/02-game-flow.md#riichi-furiten)；例外见规则边界 | 既有基线；暗杠限制用户确认 | — |
+| RIICHI-FURITEN | [立直与振听](topics/02-game-flow.md#riichi-furiten)；例外见规则边界 | 既有基线；暗杠限制用户确认；[舍牌与杠／拔北响应的振听范围用户确认](evidence/furiten-confirmations-2026-10-11.md) | — |
 | YAKU | [役种与复合](topics/03-yaku-han.md) | 既有基线、用户确认累积役满 | — |
 | SCORE | [符与基础支付](topics/04-scoring.md#base-scoring) | 既有基线；公式和实例离线复算 | — |
 | HONBA-DEPOSITS | [本场、供托与多家荣和](topics/04-scoring.md#honba-deposits) | 用户确认 | — |

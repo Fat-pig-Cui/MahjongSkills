@@ -27,5 +27,6 @@
 | [公开配置复现](evidence/reproduce-config.md) | 获取、解码、提取与证据限制 |
 | [2026-10-09包牌确认](evidence/pao-confirmations-2026-10-09.md) | 复合役满、本场划分、本地来源的房规范围 |
 | [2026-10-09完成确认](evidence/completion-confirmations-2026-10-09.md) | 终局／第四杠实际验证完成、流局满贯本场／供托、无自摸损役满 |
+| [2026-10-11振听确认](evidence/furiten-confirmations-2026-10-11.md) | 舍牌与杠／拔北响应的判定范围、放过加杠后仍可荣和的例子 |
 | [兼容索引](REPORT.md) | 旧汇总文件迁移后的导航 |
 | [维护约定](maintenance.md) | 唯一维护位置、验证命令与历史迁移 |
