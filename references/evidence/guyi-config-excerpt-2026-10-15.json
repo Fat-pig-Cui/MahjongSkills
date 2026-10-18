@@ -1,0 +1,236 @@
+{
+  "resource_version": "0.11.252.w",
+  "source": "https://game.maj-soul.com/1/v0.11.252.w/res/config/lqc.lqbin",
+  "sha256": "a5959513fa31d3b5297d2dda400c86c0eacbdb4adad461b583439d7f673c9086",
+  "config_version": "0.0.1",
+  "header_hash": "hash",
+  "tables": {
+    "desktop.matchmode": [
+      {
+        "id": 13,
+        "type": 2,
+        "mode": 1,
+        "room_name_chs": "乱斗之间",
+        "init_point": 25000,
+        "back_point": 30000
+      },
+      {
+        "id": 14,
+        "type": 2,
+        "mode": 2,
+        "room_name_chs": "乱斗之间",
+        "init_point": 25000,
+        "back_point": 30000
+      }
+    ],
+    "fan.fan": [
+      {
+        "id": 46,
+        "name_chs": "八连庄",
+        "xuanshang": 0,
+        "yiman": 1,
+        "fan_menqing": 13,
+        "fan_fulu": 13
+      },
+      {
+        "id": 51,
+        "name_chs": "燕返",
+        "xuanshang": 0,
+        "yiman": 0,
+        "fan_menqing": 1,
+        "fan_fulu": 1
+      },
+      {
+        "id": 52,
+        "name_chs": "杠振",
+        "xuanshang": 0,
+        "yiman": 0,
+        "fan_menqing": 1,
+        "fan_fulu": 1
+      },
+      {
+        "id": 53,
+        "name_chs": "十二落抬",
+        "xuanshang": 0,
+        "yiman": 0,
+        "fan_menqing": 1,
+        "fan_fulu": 1
+      },
+      {
+        "id": 54,
+        "name_chs": "五门齐",
+        "xuanshang": 0,
+        "yiman": 0,
+        "fan_menqing": 2,
+        "fan_fulu": 2
+      },
+      {
+        "id": 55,
+        "name_chs": "三连刻",
+        "xuanshang": 0,
+        "yiman": 0,
+        "fan_menqing": 2,
+        "fan_fulu": 2
+      },
+      {
+        "id": 56,
+        "name_chs": "一色三同顺",
+        "xuanshang": 0,
+        "yiman": 0,
+        "fan_menqing": 3,
+        "fan_fulu": 2
+      },
+      {
+        "id": 57,
+        "name_chs": "一筒摸月",
+        "xuanshang": 0,
+        "yiman": 0,
+        "fan_menqing": 5,
+        "fan_fulu": 5
+      },
+      {
+        "id": 58,
+        "name_chs": "九筒捞鱼",
+        "xuanshang": 0,
+        "yiman": 0,
+        "fan_menqing": 5,
+        "fan_fulu": 5
+      },
+      {
+        "id": 59,
+        "name_chs": "人和",
+        "xuanshang": 0,
+        "yiman": 1,
+        "fan_menqing": 13,
+        "fan_fulu": 13
+      },
+      {
+        "id": 60,
+        "name_chs": "大车轮",
+        "xuanshang": 0,
+        "yiman": 1,
+        "fan_menqing": 13,
+        "fan_fulu": 13
+      },
+      {
+        "id": 61,
+        "name_chs": "大竹林",
+        "xuanshang": 0,
+        "yiman": 1,
+        "fan_menqing": 13,
+        "fan_fulu": 13
+      },
+      {
+        "id": 62,
+        "name_chs": "大数邻",
+        "xuanshang": 0,
+        "yiman": 1,
+        "fan_menqing": 13,
+        "fan_fulu": 13
+      },
+      {
+        "id": 63,
+        "name_chs": "石上三年",
+        "xuanshang": 0,
+        "yiman": 1,
+        "fan_menqing": 13,
+        "fan_fulu": 13
+      },
+      {
+        "id": 64,
+        "name_chs": "大七星",
+        "xuanshang": 0,
+        "yiman": 2,
+        "fan_menqing": 26,
+        "fan_fulu": 26
+      }
+    ],
+    "fandesc.fandesc": [
+      {
+        "id": 117,
+        "name_chs": "古役：燕返",
+        "desc_chs": "荣和别家的立直宣言牌（仅第一张的宣言牌）",
+        "desc2_chs": "段位场不使用"
+      },
+      {
+        "id": 118,
+        "name_chs": "古役：杠振",
+        "desc_chs": "在别家杠完后打出一张牌时自家荣和",
+        "desc2_chs": "段位场不使用"
+      },
+      {
+        "id": 119,
+        "name_chs": "古役：十二落抬",
+        "desc_chs": "四副露自摸或者荣和",
+        "desc2_chs": "段位场不使用"
+      },
+      {
+        "id": 212,
+        "name_chs": "古役：五门齐",
+        "desc_chs": "包含万，筒，索，风牌，三元牌",
+        "desc2_chs": "段位场不使用"
+      },
+      {
+        "id": 213,
+        "name_chs": "古役：三连刻",
+        "desc_chs": "包含三个连续的同种类的刻子",
+        "desc2_chs": "段位场不使用"
+      },
+      {
+        "id": 304,
+        "name_chs": "古役：一色三同顺",
+        "desc_chs": "包含三组完全相同的顺子",
+        "desc2_chs": "副露减1番，段位场不使用"
+      },
+      {
+        "id": 502,
+        "name_chs": "古役：一筒摸月",
+        "desc_chs": "最后一张牌自摸和牌，且这张牌为1筒（五番）",
+        "desc2_chs": "段位场不使用"
+      },
+      {
+        "id": 503,
+        "name_chs": "古役：九筒捞鱼",
+        "desc_chs": "最后一张牌荣和，且这张牌为9筒（五番）",
+        "desc2_chs": "段位场不使用"
+      },
+      {
+        "id": 612,
+        "name_chs": "古役：人和",
+        "desc_chs": "身为子家，第一巡无人鸣牌的情况下，轮到自己摸牌前荣和",
+        "desc2_chs": "门前清限定，段位场不使用"
+      },
+      {
+        "id": 613,
+        "name_chs": "古役：大车轮",
+        "desc_chs": "由筒子“2-8”各两张牌所组成的七对子",
+        "desc2_chs": "门前清限定，段位场不使用"
+      },
+      {
+        "id": 614,
+        "name_chs": "古役：大竹林",
+        "desc_chs": "由索子\"2-8\"各两张牌所组成的七对子",
+        "desc2_chs": "门前清限定，段位场不使用"
+      },
+      {
+        "id": 615,
+        "name_chs": "古役：大数邻",
+        "desc_chs": "由万子\"2-8\"各两张牌所组成的七对子",
+        "desc2_chs": "门前清限定，段位场不使用"
+      },
+      {
+        "id": 616,
+        "name_chs": "古役：石上三年",
+        "desc_chs": "两立直+海底摸月 或 两立直+河底捞鱼",
+        "desc2_chs": "门前清限定，段位场不使用"
+      },
+      {
+        "id": 705,
+        "name_chs": "古役：大七星",
+        "desc_chs": "由七种字牌所组成的七对子",
+        "desc2_chs": "门前清限定，段位场不使用"
+      }
+    ]
+  },
+  "manifest": "https://game.maj-soul.com/1/resversion0.11.252.w.json"
+}

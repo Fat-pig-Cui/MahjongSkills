@@ -21,6 +21,18 @@ SELECTED = {
     ("fan", "fan"): {34},
     ("fandesc", "fandesc"): {116, 501},
 }
+GUYI_SELECTED = {
+    ("desktop", "matchmode"): {13, 14},
+    ("fan", "fan"): {46, *range(51, 65)},
+    ("fandesc", "fandesc"): {117, 118, 119, 212, 213, 304, 502, 503,
+                             612, 613, 614, 615, 616, 705},
+}
+ACTIVITY_SELECTED = {
+    ("desktop", "matchmode"): {33, 34, 35, 40, 41, *range(44, 54)},
+    ("str", "str"): {3029, 3390, 3527, 3528, 3588, 3650, 3651, 3705,
+                     3857, 3987, 4208, 20194, 20422, 25040508, 25101014},
+}
+FAN_FIELDS = {"id", "name_chs", "xuanshang", "fan_menqing", "fan_fulu"}
 
 
 def varint(data, offset):
@@ -95,7 +107,9 @@ def decode_scalar(value, pb_type):
     raise ValueError(f"Unsupported selected field type: {pb_type}")
 
 
-def extract(raw, version):
+def extract(raw, version, selected=None, fan_fields=None):
+    selected = SELECTED if selected is None else selected
+    fan_fields = FAN_FIELDS if fan_fields is None else fan_fields
     root = wire(raw)
     if not root.get(3) or not root.get(4):
         raise ValueError("Not a ConfigTables message with schemas and data")
@@ -107,7 +121,7 @@ def extract(raw, version):
             sheet = wire(sheet_raw)
             sheet_name = first(sheet, 1, b"").decode()
             key = (table_name, sheet_name)
-            if key not in SELECTED:
+            if key not in selected:
                 continue
             fields = {}
             for field_raw in sheet.get(3, []):
@@ -124,7 +138,7 @@ def extract(raw, version):
     for sheet_raw in root[4]:
         sheet = wire(sheet_raw)
         key = (first(sheet, 1, b"").decode(), first(sheet, 2, b"").decode())
-        if key not in SELECTED:
+        if key not in selected:
             continue
         if key not in schemas:
             raise ValueError(f"No schema for selected sheet {key}")
@@ -133,12 +147,12 @@ def extract(raw, version):
         rows = []
         for row_raw in sheet.get(3, []):
             encoded = wire(row_raw)
-            if first(encoded, id_index) not in SELECTED[key]:
+            if first(encoded, id_index) not in selected[key]:
                 continue
             row = {}
             for number, (name, typ, array_length) in fields.items():
                 wanted = (name in {"id", "init_point", "back_point", "mode", "type", "room_name_chs"}
-                          if key[0] == "desktop" else name in {"id", "name_chs", "xuanshang", "fan_menqing", "fan_fulu"}
+                          if key[0] == "desktop" else name in fan_fields
                           if key[0] == "fan" else name == "id" or name.endswith("chs"))
                 if not wanted:
                     continue
@@ -148,7 +162,7 @@ def extract(raw, version):
                 row[name] = values if array_length else (values[0] if values else default)
             rows.append(row)
         output["tables"][".".join(key)] = sorted(rows, key=lambda r: r["id"])
-    for key, ids in SELECTED.items():
+    for key, ids in selected.items():
         name = ".".join(key)
         rows = output["tables"].get(name, [])
         if {r["id"] for r in rows} != ids or len(rows) != len(ids):
@@ -178,6 +192,8 @@ def resolve_config(version):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, help="Decode a local lqc.lqbin without networking")
+    parser.add_argument("--profile", choices=("ranked", "guyi", "activities"), default="ranked",
+                        help="Select ranked, ancient-yaku or activity-rule evidence")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--version", default=PINNED_VERSION)
     group.add_argument("--latest", action="store_true", help="Resolve current public resource version")
@@ -198,7 +214,12 @@ def main():
             raw = download(source)
         if version == PINNED_VERSION and hashlib.sha256(raw).hexdigest() != PINNED_SHA256:
             raise ValueError("Pinned 2026-10-07 config hash differs; preserve the old evidence and inspect the new resource separately")
-        result = extract(raw, version)
+        if args.profile == "guyi":
+            result = extract(raw, version, GUYI_SELECTED, FAN_FIELDS | {"yiman"})
+        elif args.profile == "activities":
+            result = extract(raw, version, ACTIVITY_SELECTED)
+        else:
+            result = extract(raw, version)
         result["source"] = source
         result["manifest"] = manifest_url
         if args.compare and result != json.loads(args.compare.read_text()):

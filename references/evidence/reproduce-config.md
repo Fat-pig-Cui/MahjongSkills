@@ -35,6 +35,10 @@ python3 scripts/extract_config.py --latest --output .cache/config-current.json
 
 该命令重新读取版本和资源清单，新版本结果不覆盖历史摘录。公开版本、`ConfigTables.version` 和服务器裁定版本不是同一概念。`--input` 离线模式的资源版本由调用者声明，只有固定版本哈希能校验其历史身份。
 
+可选古役使用 `--profile guyi` 选择另一组表行，具体ID、2026-10-15摘录与比较命令见 [古役证据索引](../guyi-rules-sources.md)。未指定时仍为 `--profile ranked`，原段位摘录的字段与内容保持不变。
+
+活动使用 `--profile activities`，提取15个模式和15条中文说明；固定版本的 [活动摘录](activity-config-excerpt-2026-10-15.json) 与原摘录分开保存。ID映射、复现比较命令及规则差异见 [扩展规则证据](../replay-editor-rules-sources.md)。
+
 ## 摘录与证明范围
 
 | 表与ID | 保存内容 | 证明范围 |

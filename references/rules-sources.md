@@ -2,6 +2,10 @@
 
 默认玩法为雀魂四人麻将段位场。完整规则由下表指定的主题正文维护；本文件只维护适用范围、参数与证据归属。三麻的参数和差异见 [三麻索引](sanma-rules-sources.md)。自定义房选项不能覆盖段位默认。
 
+可选古役在 [古役正文](topics/14-guyi.md) 与 [古役证据索引](guyi-rules-sources.md) 单独维护。官方古役说明逐项注明段位场不使用，不能据“乱斗之间”或编辑器开关给本表默认规则增加古役。
+
+其他房规、活动与国标见 [扩展规则索引](replay-editor-rules-sources.md)。天凤与雀魂段位场的对照见 [赛制主题](topics/08-match-rules.md#platform-comparison)；它们分别采用对应专题，不因编辑器支持某项设置而修改本页段位默认。
+
 ## 平台参数
 
 | 参数 | 四麻段位值 | 来源 |
@@ -23,7 +27,7 @@
 | BASIC | [牌组、编码与和牌形](topics/01-basic-composition.md) | 既有基线、用户确认赤牌 | — |
 | FLOW | [局数、本场与普通流局](topics/02-game-flow.md) | 用户确认、既有基线 | — |
 | RIICHI-FURITEN | [立直与振听](topics/02-game-flow.md#riichi-furiten)；例外见规则边界 | 既有基线；暗杠限制用户确认；[舍牌与杠／拔北响应的振听范围用户确认](evidence/furiten-confirmations-2026-10-11.md) | — |
-| YAKU | [役种与复合](topics/03-yaku-han.md) | 既有基线、用户确认累积役满 | — |
+| YAKU | [役种与复合](topics/03-yaku-han.md) | 既有基线、用户确认累积役满；[天和取上位役满用户确认](evidence/user-confirmations-2026-10-18.md) | — |
 | SCORE | [符与基础支付](topics/04-scoring.md#base-scoring) | 既有基线；公式和实例离线复算 | — |
 | HONBA-DEPOSITS | [本场、供托与多家荣和](topics/04-scoring.md#honba-deposits) | 用户确认 | — |
 | NOTEN | [荒牌罚符](topics/04-scoring.md#honba-deposits) | 用户确认 | — |
