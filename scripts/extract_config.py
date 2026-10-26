@@ -32,6 +32,12 @@ ACTIVITY_SELECTED = {
     ("str", "str"): {3029, 3390, 3527, 3528, 3588, 3650, 3651, 3705,
                      3857, 3987, 4208, 20194, 20422, 25040508, 25101014},
 }
+CHUANMA_SELECTED = {
+    ("desktop", "matchmode"): {41},
+    ("str", "str"): {3650},
+    ("fan", "fan"): set(range(1000, 1022)),
+    ("fandesc", "fandesc"): {*range(1000, 1006), *range(1101, 1117)},
+}
 FAN_FIELDS = {"id", "name_chs", "xuanshang", "fan_menqing", "fan_fulu"}
 
 
@@ -192,8 +198,8 @@ def resolve_config(version):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, help="Decode a local lqc.lqbin without networking")
-    parser.add_argument("--profile", choices=("ranked", "guyi", "activities"), default="ranked",
-                        help="Select ranked, ancient-yaku or activity-rule evidence")
+    parser.add_argument("--profile", choices=("ranked", "guyi", "activities", "chuanma"), default="ranked",
+                        help="Select ranked, ancient-yaku, activity or Crimson Battle evidence")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--version", default=PINNED_VERSION)
     group.add_argument("--latest", action="store_true", help="Resolve current public resource version")
@@ -218,6 +224,8 @@ def main():
             result = extract(raw, version, GUYI_SELECTED, FAN_FIELDS | {"yiman"})
         elif args.profile == "activities":
             result = extract(raw, version, ACTIVITY_SELECTED)
+        elif args.profile == "chuanma":
+            result = extract(raw, version, CHUANMA_SELECTED)
         else:
             result = extract(raw, version)
         result["source"] = source

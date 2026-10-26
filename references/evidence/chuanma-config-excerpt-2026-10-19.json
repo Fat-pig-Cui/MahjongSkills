@@ -1,0 +1,316 @@
+{
+  "resource_version": "0.11.252.w",
+  "source": "https://game.maj-soul.com/1/v0.11.252.w/res/config/lqc.lqbin",
+  "sha256": "a5959513fa31d3b5297d2dda400c86c0eacbdb4adad461b583439d7f673c9086",
+  "config_version": "0.0.1",
+  "header_hash": "hash",
+  "tables": {
+    "desktop.matchmode": [
+      {
+        "id": 41,
+        "type": 2,
+        "mode": 1,
+        "room_name_chs": "赤羽之战",
+        "init_point": 50000,
+        "back_point": 50000
+      }
+    ],
+    "fan.fan": [
+      {
+        "id": 1000,
+        "name_chs": "根",
+        "xuanshang": 0,
+        "fan_menqing": 1,
+        "fan_fulu": 1
+      },
+      {
+        "id": 1001,
+        "name_chs": "杠上花",
+        "xuanshang": 0,
+        "fan_menqing": 1,
+        "fan_fulu": 1
+      },
+      {
+        "id": 1002,
+        "name_chs": "杠上炮",
+        "xuanshang": 0,
+        "fan_menqing": 1,
+        "fan_fulu": 1
+      },
+      {
+        "id": 1003,
+        "name_chs": "底和",
+        "xuanshang": 0,
+        "fan_menqing": 1,
+        "fan_fulu": 1
+      },
+      {
+        "id": 1004,
+        "name_chs": "枪杠",
+        "xuanshang": 0,
+        "fan_menqing": 1,
+        "fan_fulu": 1
+      },
+      {
+        "id": 1005,
+        "name_chs": "对对和",
+        "xuanshang": 0,
+        "fan_menqing": 2,
+        "fan_fulu": 2
+      },
+      {
+        "id": 1006,
+        "name_chs": "清一色",
+        "xuanshang": 0,
+        "fan_menqing": 3,
+        "fan_fulu": 3
+      },
+      {
+        "id": 1007,
+        "name_chs": "七对子",
+        "xuanshang": 0,
+        "fan_menqing": 3,
+        "fan_fulu": 3
+      },
+      {
+        "id": 1008,
+        "name_chs": "带幺九",
+        "xuanshang": 0,
+        "fan_menqing": 3,
+        "fan_fulu": 3
+      },
+      {
+        "id": 1009,
+        "name_chs": "金钩钓",
+        "xuanshang": 0,
+        "fan_menqing": 3,
+        "fan_fulu": 3
+      },
+      {
+        "id": 1010,
+        "name_chs": "清对",
+        "xuanshang": 0,
+        "fan_menqing": 4,
+        "fan_fulu": 4
+      },
+      {
+        "id": 1011,
+        "name_chs": "将对",
+        "xuanshang": 0,
+        "fan_menqing": 4,
+        "fan_fulu": 4
+      },
+      {
+        "id": 1012,
+        "name_chs": "龙七对",
+        "xuanshang": 0,
+        "fan_menqing": 4,
+        "fan_fulu": 4
+      },
+      {
+        "id": 1013,
+        "name_chs": "清七对",
+        "xuanshang": 0,
+        "fan_menqing": 5,
+        "fan_fulu": 5
+      },
+      {
+        "id": 1014,
+        "name_chs": "清金钩钓",
+        "xuanshang": 0,
+        "fan_menqing": 5,
+        "fan_fulu": 5
+      },
+      {
+        "id": 1015,
+        "name_chs": "清龙七对",
+        "xuanshang": 0,
+        "fan_menqing": 6,
+        "fan_fulu": 6
+      },
+      {
+        "id": 1016,
+        "name_chs": "十八罗汉",
+        "xuanshang": 0,
+        "fan_menqing": 6,
+        "fan_fulu": 6
+      },
+      {
+        "id": 1017,
+        "name_chs": "清十八罗汉",
+        "xuanshang": 0,
+        "fan_menqing": 6,
+        "fan_fulu": 6
+      },
+      {
+        "id": 1018,
+        "name_chs": "天和",
+        "xuanshang": 0,
+        "fan_menqing": 6,
+        "fan_fulu": 6
+      },
+      {
+        "id": 1019,
+        "name_chs": "地和",
+        "xuanshang": 0,
+        "fan_menqing": 6,
+        "fan_fulu": 6
+      },
+      {
+        "id": 1020,
+        "name_chs": "清幺九",
+        "xuanshang": 0,
+        "fan_menqing": 5,
+        "fan_fulu": 5
+      },
+      {
+        "id": 1021,
+        "name_chs": "海底捞月",
+        "xuanshang": 0,
+        "fan_menqing": 1,
+        "fan_fulu": 1
+      }
+    ],
+    "fandesc.fandesc": [
+      {
+        "id": 1000,
+        "name_chs": "底和",
+        "desc_chs": "不满足任何役种的基础和牌型",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1001,
+        "name_chs": "奖励役：杠上花",
+        "desc_chs": "使用杠后摸到的牌和牌",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1002,
+        "name_chs": "奖励役：杠上炮",
+        "desc_chs": "荣和别家杠后打出的牌",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1003,
+        "name_chs": "奖励役：抢杠",
+        "desc_chs": "别家加杠的时候荣和",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1004,
+        "name_chs": "奖励役：海底捞月",
+        "desc_chs": "最后一张牌荣和或自摸",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1005,
+        "name_chs": "奖励役：根",
+        "desc_chs": "手牌与副露牌合计，同一种类的牌集齐4张（包括杠）",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1101,
+        "name_chs": "对对和",
+        "desc_chs": "拥有4组刻子或者杠",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1102,
+        "name_chs": "清一色",
+        "desc_chs": "只包含1种花色的牌（万，筒，索之一）",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1103,
+        "name_chs": "七对子",
+        "desc_chs": "7组对子（可以有相同的对子）",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1104,
+        "name_chs": "带幺九",
+        "desc_chs": "只包含老头牌的4组顺子和刻子+老头牌的雀头",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1105,
+        "name_chs": "金钩钓",
+        "desc_chs": "四次碰牌或杠牌后和牌",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1106,
+        "name_chs": "清对",
+        "desc_chs": "清一色的对对和",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1107,
+        "name_chs": "将对",
+        "desc_chs": "对对和，且所有牌的数字均为258之一。",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1108,
+        "name_chs": "龙七对",
+        "desc_chs": "七对子，且其中有两组相同的对子",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1109,
+        "name_chs": "清七对",
+        "desc_chs": "清一色的七对子",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1110,
+        "name_chs": "清幺九",
+        "desc_chs": "清一色的带幺九",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1111,
+        "name_chs": "清金钩钓",
+        "desc_chs": "清一色的金钩钓",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1112,
+        "name_chs": "天和",
+        "desc_chs": "庄家第一巡和牌",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1113,
+        "name_chs": "地和",
+        "desc_chs": "轮到自己之前无人鸣牌的状态下第一巡自摸和牌",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1114,
+        "name_chs": "清龙七对",
+        "desc_chs": "清一色的七对子，且其中有两组相同的对子",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1115,
+        "name_chs": "十八罗汉",
+        "desc_chs": "开杠4次",
+        "desc2_chs": ""
+      },
+      {
+        "id": 1116,
+        "name_chs": "清十八罗汉",
+        "desc_chs": "清一色，且开杠4次",
+        "desc2_chs": ""
+      }
+    ],
+    "str.str": [
+      {
+        "id": 3650,
+        "chs": "特殊规则：赤羽之战说明\r\n\r\n - 使用的麻将牌没有字牌，总计108张\r\n - 配牌后选择3张同花色的牌，与其他雀士交换\r\n - 每局需要选择一种不需要的花色，牌型中没有此花色的牌才可以和牌\r\n - 不能立直和吃牌，没有振听，沒有王牌及宝牌\r\n - 每一局的结束条件从有1人和牌变为有3人和牌\r\n - 不设连庄，对战4局后结束。每局第一位和牌的雀士，在下一局为东风位\r\n - 发生和牌时，点数实时结算，手牌不公开。如果雀士被飞则对局结束\r\n - 一局结束后，如果和牌人数小于3人，视为流局\r\n - 暗杠时，向所有场上雀士收取2000点\r\n - 大明杠时，向打出杠牌的雀士收取2000点\r\n - 使用摸到的牌补杠时，向所有场上雀士收取1000点\r\n - 使用手牌补杠时，不向其他雀士收取点数\r\n - 补杠时如果发生抢杠，此杠不成立，不向其他雀士收取点数\r\n - 流局时，如果未听牌，对局过程中通过杠牌收取的点数会原数返还给其他雀士\r\n - 同一局内，已和牌的雀士不参与以下流局结算\r\n - 流局时，未听牌的雀士需要支付给已听牌的雀士点数，按照其听牌的可能最大番数计算\r\n - 流局时，如果手牌里还有不需要的花色，需要支付给其他雀士（无论听牌与否）每人4番起的点数，如果听牌的可能最大番数超过4番，则按照此听牌番数计算\r\n - 和牌时番数与点数的关系：\r\n1番=1000点\r\n2番=2000点\r\n3番=4000点\r\n4番=8000点\r\n5番=16000点\r\n6番封顶=32000点\r\n - 荣和时，向放铳玩家收取对应点数\r\n - 自摸和牌时，向场上所有玩家收取对应点数，并额外增加1000点"
+      }
+    ]
+  },
+  "manifest": "https://game.maj-soul.com/1/resversion0.11.252.w.json"
+}
