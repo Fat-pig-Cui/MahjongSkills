@@ -9,7 +9,8 @@ import sys
 from pathlib import Path
 from urllib.parse import unquote
 
-from mahjong_checks import MODES, base_points, legal_fu_han, noten, round100, settlement, tiles, validate_hand
+from mahjong_checks import (MODES, base_points, compact_tiles, legal_fu_han, matches_kind, noten, parse_meld,
+                            round100, settlement, tiles, validate_hand, waits)
 
 
 def markdown_files(root):
@@ -122,6 +123,99 @@ def named_table(text, name):
     if len(rows) < 2:
         raise ValueError(f"No data rows in {name}")
     return rows[1:]
+
+
+INLINE_TOPICS = {"13-sanma.md": 3, "14-guyi.md": 4, "15-room-options.md": 4,
+                 "16-event-modes.md": 4, "17-guobiao.md": 4}
+# Prose examples longer than one group: notation -> (topic, asserted kinds, fixed melds, waits).
+# A leading "!" asserts the structure must not hold.
+INLINE_HANDS = {
+    "11m22p33s11225566z": ("14-guyi.md", ("chiitoitsu", "five-categories"), (), None),
+    "333444555m789p66s": ("14-guyi.md", ("sanrenkou", "isshoku-sanjun"), (), None),
+    "11223344556677z": ("14-guyi.md", ("daichisei",), (), None),
+    "111999m1123789p1p": ("16-event-modes.md", ("all-groups-terminal", "missing-suit"), (), None),
+    "1111m223344556p6p": ("16-event-modes.md", ("seven-pairs-quad", "!standard", "missing-suit"), (), None),
+    "2222334455667p7p": ("16-event-modes.md", ("seven-pairs-quad", "standard", "missing-suit"), (), None),
+    "1234589p245689s5z": ("17-guobiao.md", ("distinct",), (), None),
+    "23m456p678s11z": ("17-guobiao.md", ("five-categories",), ("555z",), "1m 4m"),
+}
+GUYI_EXAMPLE_KINDS = {
+    "燕返": ("standard",), "杠振": ("standard",), "十二落抬": ("standard",),
+    "五门齐": ("standard", "five-categories"), "三连刻": ("sanrenkou",),
+    "一色三同顺": ("isshoku-sanjun",), "一筒摸月": ("standard",), "九筒捞鱼": ("standard",),
+    "人和": ("standard",), "大车轮": ("pairs-2to8-p",), "大竹林": ("pairs-2to8-s",),
+    "大数邻": ("pairs-2to8-m",), "石上三年": ("standard",), "大七星": ("daichisei",),
+}
+
+
+def check_structure(concealed, melds, kinds, label):
+    if len(concealed) + 3 * len(melds) != 14:
+        raise ValueError(f"Inline hand {label}: tile count does not form a winning hand")
+    for kind in kinds:
+        expected = not kind.startswith("!")
+        if matches_kind(concealed, melds, kind.lstrip("!")) != expected:
+            raise ValueError(f"Inline hand {label}: structure {kind} not satisfied")
+
+
+def check_inline_example(notation, kinds, meld_texts=(), wait_text=None, players=4):
+    melds = [parse_meld(text, players)[0] for text in meld_texts]
+    concealed = compact_tiles(notation, players)
+    if wait_text is not None:
+        expected = set(tiles(wait_text, players))
+        actual = waits(concealed, melds, "standard", players)
+        if actual != expected:
+            raise ValueError(f"Inline hand {notation}: waits {sorted(actual)}, expected {sorted(expected)}")
+        concealed = concealed + [min(expected)]
+    if kinds == ("distinct",):
+        if not matches_kind(concealed, melds, "distinct") or len(concealed) != 14:
+            raise ValueError(f"Inline tile set {notation} must list fourteen distinct tiles")
+        return
+    check_structure(concealed, melds, kinds, notation)
+
+
+def check_guyi_examples(text):
+    rows = named_table(text, "guyi-examples")
+    if {row[0] for row in rows} != set(GUYI_EXAMPLE_KINDS) or len(rows) != len(GUYI_EXAMPLE_KINDS):
+        raise ValueError("Guyi example table has missing, duplicate or unknown yaku")
+    for name, hand_cell, meld_cell, win_cell, _ in rows:
+        notation = hand_cell.strip("`")
+        win = win_cell.strip("`")
+        melds = [parse_meld(m)[0] for m in re.findall(r"`([^`]+)`", meld_cell)]
+        if meld_cell != "—" and not melds:
+            raise ValueError(f"Guyi example {name}: unreadable fixed melds")
+        concealed = compact_tiles(notation)
+        if len(concealed) != 13 - 3 * len(melds):
+            raise ValueError(f"Guyi example {name}: hand before the winning tile has the wrong count")
+        check_structure(concealed + compact_tiles(win), melds, GUYI_EXAMPLE_KINDS[name], name)
+    return len(rows)
+
+
+def check_inline_hands(root):
+    """Parse every tile span in topics 13-17; longer spans must carry an asserted structure."""
+    topics = root / "references/topics"
+    table_hands = set()
+    count = check_guyi_examples((topics / "14-guyi.md").read_text())
+    for row in named_table((topics / "14-guyi.md").read_text(), "guyi-examples"):
+        table_hands.add(row[1].strip("`"))
+    seen = set()
+    for name, players in INLINE_TOPICS.items():
+        text = (topics / name).read_text()
+        for span in re.findall(r"`((?:[0-9]+[mpsz])+)`", text):
+            try:
+                parsed = compact_tiles(span, players)
+            except ValueError as error:
+                raise ValueError(f"{name}: tile span {span}: {error}") from error
+            if len(parsed) <= 4 or (name == "14-guyi.md" and span in table_hands):
+                continue
+            entry = INLINE_HANDS.get(span)
+            if not entry or entry[0] != name:
+                raise ValueError(f"{name}: unregistered inline hand {span}; add its structure to INLINE_HANDS")
+            seen.add(span)
+    for span, (name, kinds, melds, wait_text) in INLINE_HANDS.items():
+        if span not in seen:
+            raise ValueError(f"Registered inline hand no longer in {name}: {span}")
+        check_inline_example(span, kinds, melds, wait_text, INLINE_TOPICS[name])
+    return count + len(INLINE_HANDS)
 
 
 def check_score_table(root):
@@ -314,6 +408,7 @@ def check_evidence(root):
 def validate(root):
     root = root.resolve()
     return {"links": check_links(root), "hands": check_hands(root),
+            "inline_hands": check_inline_hands(root),
             "payment_cells": check_score_table(root), "settlements": check_settlements(root),
             "match_cases": check_matches(root), "fourth_kan_cases": check_fourth_kans(root),
             "wait_defense_cases": check_waits_and_defense(root),

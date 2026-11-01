@@ -27,19 +27,38 @@ def tiles(text, players=4):
     return result
 
 
+def compact_tiles(text, players=4):
+    """Parse concatenated inline groups such as 111999m1123789p1p."""
+    if not re.fullmatch(r"(?:[0-9]+[mpsz])+", text):
+        raise ValueError(f"Invalid compact tile notation: {text}")
+    return tiles(" ".join(re.findall(r"[0-9]+[mpsz]", text)), players)
+
+
+def check_meld(meld):
+    ordered = sorted(meld)
+    triplet = len(meld) in (3, 4) and len(set(meld)) == 1
+    sequence = (len(meld) == 3 and ordered[0] < 27
+                and ordered[-1] // 9 == ordered[0] // 9
+                and ordered == list(range(ordered[0], ordered[0] + 3)))
+    if not (triplet or sequence):
+        raise ValueError("Fixed meld is not a sequence, triplet or kan")
+
+
+def parse_meld(token, players=4):
+    """Document notation: five identical digits mark a closed kan of four tiles."""
+    closed = bool(re.fullmatch(r"([0-9])\1{4}[mpsz]", token))
+    meld = tiles(token[1:] if closed else token, players)
+    check_meld(meld)
+    return meld, closed
+
+
 def split_hand(text, players=4):
     melds = [tiles(m, players) for m in re.findall(r"\[([^\]]+)\]", text)]
     concealed = tiles(re.sub(r"\[[^\]]+\]", "", text), players)
     if "[" in re.sub(r"\[[^\]]+\]", "", text) or len(melds) > 4:
         raise ValueError("Invalid fixed melds")
     for meld in melds:
-        ordered = sorted(meld)
-        triplet = len(meld) in (3, 4) and len(set(meld)) == 1
-        sequence = (len(meld) == 3 and ordered[0] < 27
-                    and ordered[-1] // 9 == ordered[0] // 9
-                    and ordered == list(range(ordered[0], ordered[0] + 3)))
-        if not (triplet or sequence):
-            raise ValueError("Fixed meld is not a sequence, triplet or kan")
+        check_meld(meld)
     all_tiles = concealed + [t for m in melds for t in m]
     if any(count > 4 for count in Counter(all_tiles).values()):
         raise ValueError("More than four copies across hand and fixed melds")
@@ -79,8 +98,42 @@ def standard_shapes(concealed, fixed=0):
     return result
 
 
+def complete_shapes(concealed, melds=()):
+    """Pair-plus-four-group readings, with the fixed melds appended to each."""
+    fixed = tuple(tuple(sorted(m)) for m in melds)
+    return [(pair, groups + fixed) for pair, groups in standard_shapes(concealed, len(melds))]
+
+
 def matches_kind(concealed, melds, kind, win=None, seat=27, round_wind=27):
     counts = Counter(concealed)
+    all_tiles = concealed + [t for m in melds for t in m]
+    if kind == "five-categories":
+        return {4 if t >= 31 else t // 9 for t in all_tiles} == set(range(5))
+    if kind == "missing-suit":
+        return len({t // 9 for t in all_tiles if t < 27}) <= 2
+    if kind == "distinct":
+        return len(set(all_tiles)) == len(all_tiles)
+    if kind == "seven-pairs-quad":
+        # Chuanma counts four identical tiles as two pairs.
+        return (not melds and len(concealed) == 14 and 4 in counts.values()
+                and all(n % 2 == 0 for n in counts.values()))
+    if kind == "daichisei":
+        return matches_kind(concealed, melds, "chiitoitsu") and min(concealed) >= 27
+    if kind.startswith("pairs-2to8-"):
+        suit = "mps".index(kind[-1]) * 9
+        return not melds and counts == Counter({suit + n: 2 for n in range(1, 8)})
+    if kind in {"sanrenkou", "isshoku-sanjun", "all-groups-terminal"}:
+        for pair, groups in complete_shapes(concealed, melds):
+            triplets = {g[0] for g in groups if len(set(g)) == 1 and g[0] < 27}
+            sequences = Counter(g for g in groups if len(set(g)) > 1)
+            if kind == "sanrenkou" and any(t % 9 <= 6 and {t + 1, t + 2} <= triplets for t in triplets):
+                return True
+            if kind == "isshoku-sanjun" and any(n >= 3 for n in sequences.values()):
+                return True
+            terminal = lambda t: t < 27 and t % 9 in (0, 8)
+            if kind == "all-groups-terminal" and terminal(pair) and all(any(map(terminal, g)) for g in groups):
+                return True
+        return False
     if kind == "chiitoitsu":
         return not melds and len(counts) == 7 and set(counts.values()) == {2}
     if kind == "kokushi":
@@ -117,6 +170,13 @@ def matches_kind(concealed, melds, kind, win=None, seat=27, round_wind=27):
     return False
 
 
+def waits(concealed, melds, kind, players=4):
+    counts = Counter(concealed + [t for m in melds for t in m])
+    return {tile for tile in range(34)
+            if not (players == 3 and 0 < tile < 8) and counts[tile] < 4
+            and matches_kind(concealed + [tile], melds, kind, tile)}
+
+
 def validate_hand(fields):
     players = int(fields.get("players", "4"))
     if players not in (3, 4):
@@ -131,13 +191,7 @@ def validate_hand(fields):
             raise ValueError("Complete hand does not satisfy the asserted structure")
         return
     expected = set(tiles(fields["win"], players))
-    counts = Counter(concealed + [t for m in melds for t in m])
-    actual = set()
-    for tile in range(34):
-        if players == 3 and tile < 9 and tile not in (0, 8):
-            continue
-        if counts[tile] < 4 and matches_kind(concealed + [tile], melds, kind, tile):
-            actual.add(tile)
+    actual = waits(concealed, melds, kind, players)
     if actual != expected:
         raise ValueError(f"Expected waits {sorted(expected)}, actual {sorted(actual)}")
 

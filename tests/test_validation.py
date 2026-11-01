@@ -181,6 +181,7 @@ class DocumentTests(unittest.TestCase):
     def test_full_package(self):
         result = validate.validate(ROOT)
         self.assertEqual(result["hands"], 19)
+        self.assertEqual(result["inline_hands"], 22)
         self.assertEqual(result["settlements"], 58)
         self.assertEqual(result["match_cases"], 22)
         self.assertEqual(result["fourth_kan_cases"], 11)
@@ -274,6 +275,79 @@ class DocumentTests(unittest.TestCase):
             self.assertEqual(result["fourth_kan_cases"], 11)
             subprocess.run([sys.executable, str(root / "scripts/validate.py")], cwd=root.parent,
                            check=True, capture_output=True, text=True)
+
+
+class InlineHandTests(unittest.TestCase):
+    def copy_topics(self, directory):
+        root = Path(directory)
+        shutil.copytree(ROOT / "references/topics", root / "references/topics")
+        return root
+
+    def test_compact_notation_and_closed_kan_marker(self):
+        self.assertEqual(checks.compact_tiles("23m5z"), [1, 2, 31])
+        for text in ("23m 5z", "23", "8z", "55555m"):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                checks.compact_tiles(text)
+        self.assertEqual(checks.parse_meld("55555m"), ([4] * 4, True))
+        self.assertEqual(checks.parse_meld("5555m"), ([4] * 4, False))
+        with self.assertRaises(ValueError):
+            checks.parse_meld("135m")
+
+    def test_structures_reject_near_misses(self):
+        cases = (
+            ("3344556677889p", ("pairs-2to8-p",)),        # 3-9 is not 大车轮
+            ("11223344556666z", ("daichisei",)),           # four 6z are not two pairs
+            ("111999m1123456p1p", ("all-groups-terminal",)),
+            ("11m22p33s11223344z", ("five-categories",)),  # no dragon
+            ("1111m223344556p6s", ("seven-pairs-quad",)),
+        )
+        for notation, kinds in cases:
+            with self.subTest(notation=notation), self.assertRaises(ValueError):
+                validate.check_inline_example(notation, kinds)
+
+    def test_guobiao_wait_regression_is_detected(self):
+        validate.check_inline_example("23m456p678s11z", ("five-categories",), ("555z",), "1m 4m")
+        with self.assertRaises(ValueError):
+            validate.check_inline_example("23m456p678s11z", ("five-categories",), ("555z",), "4m")
+        with self.assertRaises(ValueError):
+            validate.check_inline_example("1234589p245689s5z5z", ("distinct",))
+
+    def test_guyi_table_edits_are_detected(self):
+        mutations = (
+            ("| 大车轮 | `2233445566778p`", "| 大车轮 | `3344556677889p`"),
+            ("| 三连刻 | `33344455m777p66s`", "| 三连刻 | `3334445m777p66s`"),
+            ("碰`888p`", "碰`889p`"),
+            ("| 人和 | `234567m234567p5s`", "| 地和 | `234567m234567p5s`"),
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.copy_topics(directory)
+            target = root / "references/topics/14-guyi.md"
+            source = target.read_text()
+            for old, new in mutations:
+                with self.subTest(mutation=old):
+                    self.assertIn(old, source)
+                    target.write_text(source.replace(old, new, 1))
+                    with self.assertRaises(ValueError):
+                        validate.check_inline_hands(root)
+
+    def test_prose_hand_edits_are_detected(self):
+        mutations = (
+            ("16-event-modes.md", "`111999m1123789p1p`", "`111999m1123456p1p`"),  # unregistered
+            ("17-guobiao.md", "`1234589p245689s5z`", "`1234589p245689s6z`"),
+            ("13-sanma.md", "`19m`", "`29m`"),                                    # no 2m in sanma
+            ("14-guyi.md", "`11223344556677z`", "大七星"),                         # registered example removed
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = self.copy_topics(directory)
+            for name, old, new in mutations:
+                target = root / "references/topics" / name
+                source = (ROOT / "references/topics" / name).read_text()
+                with self.subTest(mutation=old):
+                    self.assertIn(old, source)
+                    target.write_text(source.replace(old, new, 1))
+                    with self.assertRaises(ValueError):
+                        validate.check_inline_hands(root)
+                    target.write_text(source)
 
 
 def vint(value):
