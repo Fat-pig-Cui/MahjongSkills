@@ -1,4 +1,5 @@
 import shutil
+import json
 import subprocess
 import struct
 import sys
@@ -46,6 +47,17 @@ class HandTests(unittest.TestCase):
     def test_seven_pairs_needs_seven_distinct_types(self):
         with self.assertRaises(ValueError):
             checks.validate_hand({"state": "complete", "hand": "1111m 22m 33p 44p 55s 66s", "kind": "chiitoitsu"})
+
+    def test_chuanma_flower_pig_all_unten_and_multiple_pigs(self):
+        for huazhu, huled, points, expected in (
+            ([True, False, False, False], [False] * 4, [0] * 4, [-24000, 8000, 8000, 8000]),
+            ([True, True, False, False], [False, False, True, False], [0, 0, 16000, 8000],
+             [-8000, -8000, 0, 16000]),
+        ):
+            matrix = checks.flower_pig_deltas(huazhu, huled, points)
+            actual = [sum(row) for row in matrix]
+            self.assertEqual(actual, expected)
+            self.assertEqual(sum(actual), 0)
 
 
 class PaymentTests(unittest.TestCase):
@@ -178,6 +190,18 @@ class PaymentTests(unittest.TestCase):
 
 
 class DocumentTests(unittest.TestCase):
+    def test_cli_score_and_flower_pig(self):
+        cli = ROOT / "scripts/mahjong_cli.py"
+        score = subprocess.run([sys.executable, str(cli), "score", "--fu", "30", "--han", "4"],
+                               check=True, capture_output=True, text=True)
+        self.assertEqual(json.loads(score.stdout)["base_points"], 1920)
+        flower = subprocess.run([
+            sys.executable, str(cli), "flower-pig",
+            "--huazhu", "true,false,false,false",
+            "--huled", "false,false,false,false",
+        ], check=True, capture_output=True, text=True)
+        self.assertEqual(json.loads(flower.stdout)["net"], [-24000, 8000, 8000, 8000])
+
     def test_full_package(self):
         result = validate.validate(ROOT)
         self.assertEqual(result["hands"], 19)
@@ -185,6 +209,8 @@ class DocumentTests(unittest.TestCase):
         self.assertEqual(result["settlements"], 58)
         self.assertEqual(result["match_cases"], 22)
         self.assertEqual(result["fourth_kan_cases"], 11)
+        self.assertEqual(result["chuanma_draw_cases"], 2)
+        self.assertEqual(result["versioned_rule_cases"], 5)
 
     def test_threshold_tie_and_extension(self):
         judge = validate.documented_judge(ROOT)

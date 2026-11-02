@@ -331,6 +331,32 @@ def noten(players, tenpai):
             for p in range(players)]
 
 
+def flower_pig_deltas(huazhu, huled, possible_points=None):
+    """Return 赤羽花猪 transfers for one draw, indexed by payer/recipient.
+
+    A flower pig pays every other unfinished non-flower-pig player at least
+    8000 points.  The matrix makes pairwise cancellation and conservation
+    visible to callers instead of hiding it in a net total.
+    """
+    if len(huazhu) != len(huled) or len(huazhu) not in (3, 4):
+        raise ValueError("huazhu and huled must have equal 3- or 4-player length")
+    if possible_points is None:
+        possible_points = [0] * len(huazhu)
+    if len(possible_points) != len(huazhu) or any(p < 0 for p in possible_points):
+        raise ValueError("possible_points must match players and be nonnegative")
+    deltas = [[0] * len(huazhu) for _ in huazhu]
+    for payer, is_flower_pig in enumerate(huazhu):
+        if not is_flower_pig or huled[payer]:
+            continue
+        for recipient in range(len(huazhu)):
+            if recipient == payer or huled[recipient] or huazhu[recipient]:
+                continue
+            amount = max(8000, possible_points[recipient])
+            deltas[payer][recipient] -= amount
+            deltas[recipient][payer] += amount
+    return deltas
+
+
 MODES = {
     "四人东": ((1, 4), (2, 4), 30000),
     "四人南": ((2, 4), (3, 4), 30000),

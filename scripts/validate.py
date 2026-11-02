@@ -9,8 +9,8 @@ import sys
 from pathlib import Path
 from urllib.parse import unquote
 
-from mahjong_checks import (MODES, base_points, compact_tiles, legal_fu_han, matches_kind, noten, parse_meld,
-                            round100, settlement, tiles, validate_hand, waits)
+from mahjong_checks import (MODES, base_points, compact_tiles, flower_pig_deltas, legal_fu_han, matches_kind,
+                            noten, parse_meld, round100, settlement, tiles, validate_hand, waits)
 
 
 def markdown_files(root):
@@ -405,6 +405,34 @@ def check_evidence(root):
     return count
 
 
+def check_chuanma_fixture(root):
+    fixture = json.loads((root / "references/examples/chuanma-draw-2026-11.json").read_text())
+    cases = fixture.get("cases", [])
+    if fixture.get("schema") != "chuanma-draw-fixture/v1" or not cases:
+        raise ValueError("Invalid Chuanma draw fixture")
+    for case in cases:
+        matrix = flower_pig_deltas(case["huazhu"], case["huled"], case["possible_points"])
+        actual = [sum(row) for row in matrix]
+        if actual != case["expected_net"] or sum(actual) != 0:
+            raise ValueError(f"Chuanma draw fixture {case['id']}: {actual}")
+    return len(cases)
+
+
+def check_versioned_rule_fixtures(root):
+    fixture = json.loads((root / "references/examples/versioned-rule-fixtures-2026-11.json").read_text())
+    if fixture.get("schema") != "mahjongskills-rule-fixtures/v1":
+        raise ValueError("Invalid versioned rule fixture schema")
+    expected_profiles = {"guyi", "activity", "guobiao"}
+    cases = fixture.get("cases", [])
+    if {case.get("profile") for case in cases} != expected_profiles:
+        raise ValueError("Versioned fixtures must cover guyi, activity and guobiao")
+    for case in cases:
+        concealed = compact_tiles(case["notation"])
+        if len(concealed) != 14 or not matches_kind(concealed, (), case["kind"]):
+            raise ValueError(f"Versioned fixture does not satisfy its kind: {case['id']}")
+    return len(cases)
+
+
 def validate(root):
     root = root.resolve()
     return {"links": check_links(root), "hands": check_hands(root),
@@ -412,7 +440,9 @@ def validate(root):
             "payment_cells": check_score_table(root), "settlements": check_settlements(root),
             "match_cases": check_matches(root), "fourth_kan_cases": check_fourth_kans(root),
             "wait_defense_cases": check_waits_and_defense(root),
-            "evidence_rows": check_evidence(root)}
+            "evidence_rows": check_evidence(root),
+            "chuanma_draw_cases": check_chuanma_fixture(root),
+            "versioned_rule_cases": check_versioned_rule_fixtures(root)}
 
 
 def main():

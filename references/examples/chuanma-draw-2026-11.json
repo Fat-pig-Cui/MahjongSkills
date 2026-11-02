@@ -1,0 +1,20 @@
+{
+  "schema": "chuanma-draw-fixture/v1",
+  "created": "2026-11-02",
+  "cases": [
+    {
+      "id": "all-unten-one-flower-pig",
+      "huazhu": [true, false, false, false],
+      "huled": [false, false, false, false],
+      "possible_points": [0, 0, 0, 0],
+      "expected_net": [-24000, 8000, 8000, 8000]
+    },
+    {
+      "id": "two-flower-pigs-ignore-winner",
+      "huazhu": [true, true, false, false],
+      "huled": [false, false, true, false],
+      "possible_points": [0, 0, 16000, 8000],
+      "expected_net": [-8000, -8000, 0, 16000]
+    }
+  ]
+}

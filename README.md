@@ -24,6 +24,8 @@
 | [references/evidence](references/evidence/verification-2026-10-07.md) | 历史确认、公开配置摘录和复现说明 |
 | [scripts/validate.py](scripts/validate.py) | 本地格式、链接、牌例、计分与流程检查 |
 | [scripts/extract_config.py](scripts/extract_config.py) | 获取或读取公开配置，按结构提取规则证据 |
+| [scripts/mahjong_cli.py](scripts/mahjong_cli.py) | 无第三方依赖的牌例、计分、结算和赤羽花猪检查 CLI |
+| [references/capability-matrix.md](references/capability-matrix.md) | 脚本能力、文档级检查和未实现边界 |
 
 ## 验证和维护
 
@@ -32,6 +34,7 @@
 ```sh
 python3 scripts/validate.py
 python3 -m unittest discover -s tests
+python3 scripts/mahjong_cli.py --help
 ```
 
 CI 运行同样的离线检查。它们证明文档与所覆盖实例内部一致，不能单独证明服务器裁定。终局、第四杠与复杂包牌均已由用户确认经过实际验证，当前段位基线验证无未闭环项；这不包含新增可选古役、活动与国标的服务器验证。原始牌谱／日志可后续归档，状态见验证完成记录。

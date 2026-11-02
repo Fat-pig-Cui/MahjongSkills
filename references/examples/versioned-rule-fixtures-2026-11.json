@@ -1,0 +1,12 @@
+{
+  "schema": "mahjongskills-rule-fixtures/v1",
+  "fixture_date": "2026-11-02",
+  "source_resource_version": "0.11.252.w",
+  "cases": [
+    {"id": "guyi-five-categories", "profile": "guyi", "notation": "11m22p33s11225566z", "kind": "five-categories"},
+    {"id": "guyi-big-seven-stars", "profile": "guyi", "notation": "11223344556677z", "kind": "daichisei"},
+    {"id": "activity-chuanma-terminal-groups", "profile": "activity", "notation": "111999m1123789p1p", "kind": "all-groups-terminal"},
+    {"id": "activity-chuanma-seven-pairs-quad", "profile": "activity", "notation": "1111m223344556p6p", "kind": "seven-pairs-quad"},
+    {"id": "guobiao-fourteen-distinct", "profile": "guobiao", "notation": "1234589p245689s5z", "kind": "distinct"}
+  ]
+}

@@ -28,7 +28,10 @@
 | [古役证据索引](guyi-rules-sources.md) | 可选古役的官方配置、本地材料与实现差异 |
 | [扩展规则证据索引](replay-editor-rules-sources.md) | 原README覆盖清单、活动公开配置、国标平台与实现差异 |
 | [和牌牌例](examples/hands.md)、[计分实例](examples/scoring.md)、[流程示例](examples/gameplay.md) | 有具体输入和可核对结果的示例 |
+| [赤羽流局夹具](examples/chuanma-draw-2026-11.json) | 全员未听、多名花猪和已和牌排除的转账预期 |
+| [扩展规则版本夹具](examples/versioned-rule-fixtures-2026-11.json) | 古役、活动和国标的版本化结构案例 |
 | [验证状态](pending-verification.md) | 当前验证状态与已完成结论 |
+| [能力矩阵](capability-matrix.md) | 脚本能力、CLI和未实现边界 |
 | [历史确认笔记](evidence/user-confirmations-2026-10-07.md)、[2026-10-07核验记录](evidence/verification-2026-10-07.md) | 当日来源与确认范围 |
 | [公开配置复现](evidence/reproduce-config.md) | 获取、解码、提取与证据限制 |
 | [2026-10-09包牌确认](evidence/pao-confirmations-2026-10-09.md) | 复合役满、本场划分、本地来源的房规范围 |
