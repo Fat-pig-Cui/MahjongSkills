@@ -155,6 +155,11 @@ def matches_kind(concealed, melds, kind, win=None, seat=27, round_wind=27):
             if win == pair:
                 return True
         if kind == "pinfu" and len(sequences) == 4 and pair not in {seat, round_wind, 31, 32, 33}:
+            # A complete hand already contains the winning tile, so its
+            # four-sequence shape is enough.  Tenpai still needs the winning
+            # tile to be checked against a two-sided wait below.
+            if win is None:
+                return True
             for group in sequences:
                 if win == group[0] and group[0] % 9 < 6:
                     return True

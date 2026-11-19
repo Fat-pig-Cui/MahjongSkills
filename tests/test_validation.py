@@ -36,6 +36,9 @@ class HandTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             checks.validate_hand({"state": "tenpai", "hand": "123m 456p 789s 56s 77z", "win": "4s 7s", "kind": "pinfu"})
 
+    def test_complete_pinfu_is_accepted_without_repeating_the_win_tile(self):
+        checks.validate_hand({"state": "complete", "hand": "123m 456m 789p 234s 55p", "kind": "pinfu"})
+
     def test_unlisted_third_wait_is_rejected(self):
         with self.assertRaises(ValueError):
             checks.validate_hand({"state": "tenpai", "hand": "123m 456p 234s 56s 88p", "win": "4s 7s", "kind": "pinfu"})
@@ -211,6 +214,7 @@ class DocumentTests(unittest.TestCase):
         self.assertEqual(result["fourth_kan_cases"], 11)
         self.assertEqual(result["chuanma_draw_cases"], 2)
         self.assertEqual(result["versioned_rule_cases"], 5)
+        self.assertEqual(result["replay_editor_modules"], len(validate.REPLAY_EDITOR_COPY))
 
     def test_threshold_tie_and_extension(self):
         judge = validate.documented_judge(ROOT)
@@ -228,6 +232,23 @@ class DocumentTests(unittest.TestCase):
             target.write_text(source.replace("700 / 400", "800 / 400", 1))
             with self.assertRaises(ValueError):
                 validate.check_score_table(root)
+
+    def test_last_tile_kan_boundary_is_documented(self):
+        """2026-11-03 ruling: no kan after the final drawable tile has been drawn."""
+        topics = ROOT / "references/topics"
+        edge = (topics / "07-edge-cases.md").read_text()
+        self.assertIn("摸到的牌若已是本局最后一张可摸的牌", edge)
+        for name in ("07-edge-cases.md", "09-call-kan-rules.md", "13-sanma.md"):
+            with self.subTest(topic=name):
+                self.assertNotIn("通常牌山仅剩最后一张", (topics / name).read_text())
+        for name in ("09-call-kan-rules.md", "13-sanma.md"):
+            with self.subTest(topic=name):
+                self.assertIn("摸到最后一张可摸的牌后", (topics / name).read_text())
+        self.assertIn("不得再开杠", (topics / "16-event-modes.md").read_text())
+        self.assertIn("摸到牌墙最后一张可摸的牌", (topics / "17-guobiao.md").read_text())
+        evidence = (ROOT / "references/evidence/user-confirmations-2026-11-03.md").read_text()
+        for scope in ("立直麻将", "赤羽之战", "国标麻将"):
+            self.assertIn(scope, evidence)
 
     def test_fourth_kan_timing_regressions_are_detected(self):
         source = (ROOT / "references/examples/gameplay.md").read_text()
@@ -294,7 +315,7 @@ class DocumentTests(unittest.TestCase):
             root = Path(directory) / "riichi-mahjong"
             root.mkdir()
             shutil.copy(ROOT / "SKILL.md", root)
-            for path in ("references", "scripts"):
+            for path in ("references", "scripts", "third_party"):
                 shutil.copytree(ROOT / path, root / path, ignore=shutil.ignore_patterns("__pycache__"))
             result = validate.validate(root)
             self.assertEqual(result["match_cases"], 22)
