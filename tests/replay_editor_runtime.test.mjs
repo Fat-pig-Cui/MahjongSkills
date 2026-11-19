@@ -14,7 +14,9 @@ const fanSearch = await import(path.join(root, '.cache', 'replay-editor', 'core'
 const tileVector = await import(path.join(root, '.cache', 'replay-editor', 'core', 'tile-vector.js'));
 
 function run(...args) {
-    return JSON.parse(execFileSync(node, [cli, ...args], {cwd: root, encoding: 'utf8'}));
+    return JSON.parse(execFileSync(node, [cli, ...args], {
+        cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'],
+    }));
 }
 
 test('CLI rejects unsupported modes and out-of-range seats', () => {
