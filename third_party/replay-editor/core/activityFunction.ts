@@ -45,7 +45,7 @@ export const huanpai = (tls: string[], type: HuanpaiType): void => {
             player_tiles[seat].push(tile);
 
         player_tiles[seat].sort(cmp);
-        
+
         ret[seat] = {
             out_tiles: tiles[seat] as [Tile, Tile, Tile],
             out_tile_states: [0, 0, 0],

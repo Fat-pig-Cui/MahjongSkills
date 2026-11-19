@@ -248,4 +248,3 @@ export const calcFanChuanma = (seat: Seat, zimo: boolean, type: boolean = false)
         return ans;
     }
 };
-

@@ -1001,4 +1001,3 @@ export const calcFanGuobiao = (seat: Seat, zimo: boolean): CalcFanRet => {
             ans.fans.push({val: 1, id: 8081}); // 自摸
     }
 };
-
