@@ -1,0 +1,14 @@
+majsoul-replay-editor
+Source: https://github.com/Fat-pig-Cui/majsoul-replay-editor
+Source authors identified in the imported headers: GrandDawn, Fat-pig-Cui.
+License: MIT; see LICENSE in this directory.
+
+This notice covers the offline-only source subset in this directory.
+The owner explicitly authorized MIT relicensing of this subset and its derived
+custom-fan catalog. Original source and author attribution are retained.
+The source project's separately located tools/convert_paipu.mjs also uses the
+MIT License; it is not included in this copy.
+Modifications are documented in README.md in this directory. The source
+project's docs/CLIENT_TOOLS_MIGRATION.md is not included in this repository.
+No official game implementation, UI override source, assets, account data,
+credentials or generated game resources are included in this source subset.

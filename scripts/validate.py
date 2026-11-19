@@ -13,6 +13,14 @@ from mahjong_checks import (MODES, base_points, compact_tiles, flower_pig_deltas
                             noten, parse_meld, round100, settlement, tiles, validate_hand, waits)
 
 
+REPLAY_EDITOR_COPY = (
+    "README.md", "LICENSE", "NOTICE", "tsconfig.json", "types.d.ts", "offline.ts",
+    "core/calcFan.ts", "core/calcFanChuanma.ts", "core/calcFanGuobiao.ts",
+    "core/fanSearch.ts", "core/data.ts", "core/core.ts", "core/chuanmaSettlement.ts",
+    "core/exportedUtils.ts", "core/settlement.ts", "core/tile-vector.ts",
+)
+
+
 def markdown_files(root):
     return sorted(p for p in root.rglob("*.md")
                   if not any(part.startswith(".") for part in p.relative_to(root).parts))
@@ -433,6 +441,19 @@ def check_versioned_rule_fixtures(root):
     return len(cases)
 
 
+def check_replay_editor_copy(root):
+    """Check that the vendored executable rule source is complete enough to build."""
+    source = root / "third_party/replay-editor"
+    missing = [relative for relative in REPLAY_EDITOR_COPY if not (source / relative).is_file()]
+    if missing:
+        raise ValueError(f"Incomplete replay-editor copy: {missing}")
+    readme = (source / "README.md").read_text()
+    notice = (source / "NOTICE").read_text()
+    if "MIT" not in readme or "MIT" not in notice or "Fat-pig-Cui" not in notice:
+        raise ValueError("Replay-editor copy is missing provenance/license notice")
+    return len(REPLAY_EDITOR_COPY)
+
+
 def validate(root):
     root = root.resolve()
     return {"links": check_links(root), "hands": check_hands(root),
@@ -442,7 +463,8 @@ def validate(root):
             "wait_defense_cases": check_waits_and_defense(root),
             "evidence_rows": check_evidence(root),
             "chuanma_draw_cases": check_chuanma_fixture(root),
-            "versioned_rule_cases": check_versioned_rule_fixtures(root)}
+            "versioned_rule_cases": check_versioned_rule_fixtures(root),
+            "replay_editor_modules": check_replay_editor_copy(root)}
 
 
 def main():
