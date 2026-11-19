@@ -8,7 +8,7 @@
 
 [雀魂古役专题](references/topics/14-guyi.md) 详细说明14个古役及判定边界，附分列手牌／副露／和牌张的牌例。古役须明确启用，段位场不使用；[证据索引](references/guyi-rules-sources.md) 区分官方公开说明、本地编辑器实现与尚未实测的细节。
 
-[可选房规](references/topics/15-room-options.md) 覆盖友人房／比赛房设置与包杠；[活动专题](references/topics/16-event-modes.md) 说明修罗、赤羽等15种玩法；[国标专题](references/topics/17-guobiao.md) 独立说明8番起和、番种排除和支付。国标为来源编辑器参考雀渣的实现，不是雀魂官方玩法。原README覆盖范围与已知差异见 [扩展规则证据](references/replay-editor-rules-sources.md)。
+[可选房规](references/topics/15-room-options.md) 覆盖友人房／比赛房设置与包杠；[活动专题](references/topics/16-event-modes.md) 说明修罗、赤羽等17种玩法；[国标专题](references/topics/17-guobiao.md) 独立说明8番起和、番种排除和支付。国标为来源编辑器参考雀渣的实现，不是雀魂官方玩法。原README覆盖范围与已知差异见 [扩展规则证据](references/replay-editor-rules-sources.md)。
 
 ## 目录职责
 
@@ -25,6 +25,8 @@
 | [scripts/validate.py](scripts/validate.py) | 本地格式、链接、牌例、计分与流程检查 |
 | [scripts/extract_config.py](scripts/extract_config.py) | 获取或读取公开配置，按结构提取规则证据 |
 | [scripts/mahjong_cli.py](scripts/mahjong_cli.py) | 无第三方依赖的牌例、计分、结算和赤羽花猪检查 CLI |
+| [scripts/replay_editor_cli.mjs](scripts/replay_editor_cli.mjs) | 调用移植算法副本的古役／活动／赤羽／国标算番 CLI |
+| [third_party/replay-editor](third_party/replay-editor/README.md) | MIT 授权的离线 replay-editor 算法副本，保留来源与修复记录 |
 | [references/capability-matrix.md](references/capability-matrix.md) | 脚本能力、文档级检查和未实现边界 |
 
 ## 验证和维护
@@ -37,6 +39,15 @@ python3 -m unittest discover -s tests
 python3 scripts/mahjong_cli.py --help
 ```
 
-CI 运行同样的离线检查。它们证明文档与所覆盖实例内部一致，不能单独证明服务器裁定。终局、第四杠与复杂包牌均已由用户确认经过实际验证，当前段位基线验证无未闭环项；这不包含新增可选古役、活动与国标的服务器验证。原始牌谱／日志可后续归档，状态见验证完成记录。
+古役、活动、赤羽和国标的可执行算番副本需要 Node.js 20+ 与 TypeScript 编译器。先构建到被 Git 忽略的 `.cache/`，再调用 CLI：
+
+```sh
+node scripts/build_replay_editor.mjs
+node scripts/replay_editor_cli.mjs --mode guobiao --hand '1112345678999p1p'
+node scripts/replay_editor_cli.mjs --mode guyi --hand '22334455667788p' --zimo
+node scripts/replay_editor_cli.mjs --mode activity --detail-rule '{"wanxiangxiuluo_mode":true}' --hand 'bd123456m234678p5z' --zimo
+```
+
+Python 校验证明文档与所覆盖实例内部一致；Node 副本测试证明移植算法在固定合成输入下可执行。两者都不能单独证明服务器当期裁定。终局、第四杠与复杂包牌均已由用户确认经过实际验证，当前段位基线验证无未闭环项；可选规则的实战证据边界仍见验证完成记录。
 
 维护步骤、目录迁移与配置复现命令见 [维护约定](references/maintenance.md)。

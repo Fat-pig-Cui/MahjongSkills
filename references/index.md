@@ -19,7 +19,7 @@
 | 13 | [三麻差异](topics/13-sanma.md) | 三麻参数、拔北、支付与四麻差异 |
 | 14 | [雀魂古役](topics/14-guyi.md) | 可选古役的成立条件、番数、门清、复合与行动时点 |
 | 15 | [可选房规](topics/15-room-options.md) | 友人房、比赛房设置、责任选项与包杠 |
-| 16 | [活动玩法](topics/16-event-modes.md) | 修罗、川麻及13种活动的流程、加成与支付 |
+| 16 | [活动玩法](topics/16-event-modes.md) | 修罗、川麻、强夺之战、宝牌双刃及其他活动的流程、加成与支付 |
 | 17 | [国标模式](topics/17-guobiao.md) | 8番资格、番种目录、计番原则与编辑器扩展 |
 
 | 支持材料 | 用途 |
@@ -29,6 +29,7 @@
 | [扩展规则证据索引](replay-editor-rules-sources.md) | 原README覆盖清单、活动公开配置、国标平台与实现差异 |
 | [和牌牌例](examples/hands.md)、[计分实例](examples/scoring.md)、[流程示例](examples/gameplay.md) | 有具体输入和可核对结果的示例 |
 | [赤羽流局夹具](examples/chuanma-draw-2026-11.json) | 全员未听、多名花猪和已和牌排除的转账预期 |
+| [replay-editor 算法副本](evidence/replay-editor-copy-2026-11.md) | 古役、活动、赤羽和国标的可执行源码副本及离线验收 |
 | [扩展规则版本夹具](examples/versioned-rule-fixtures-2026-11.json) | 古役、活动和国标的版本化结构案例 |
 | [验证状态](pending-verification.md) | 当前验证状态与已完成结论 |
 | [能力矩阵](capability-matrix.md) | 脚本能力、CLI和未实现边界 |
@@ -41,5 +42,7 @@
 | [2026-10-18天和确认](evidence/user-confirmations-2026-10-18.md) | 天和同时满足相关牌型时取上位役满 |
 | [2026-10-19赤羽整理与补充](evidence/chuanma-notes-2026-10-19.md) | 22项番型来源、抢杠／杠上炮时序、扣根确认及9组离线输出；当前核验项见验证状态 |
 | [2026-10-19脚本差异裁定](evidence/js-audit-confirmations-2026-10-19.md) | JS问题归类、宝牌联动、下克上瞬时点数、连环名称细分及暂定的补花人和 |
+| [2026-11-03最后一张与开杠确认](evidence/user-confirmations-2026-11-03.md) | 摸到最后一张可摸的牌后不得开杠；立直、赤羽、国标同一界 |
+| [2026-11-18新活动场规则材料](evidence/user-provided-activity-rules-2026-11-18.md) | 强夺之战与宝牌双刃的用户提供规则、来源边界和未确定交互 |
 | [兼容索引](REPORT.md) | 旧汇总文件迁移后的导航 |
 | [维护约定](maintenance.md) | 唯一维护位置、验证命令与历史迁移 |

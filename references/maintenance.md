@@ -30,6 +30,8 @@ npm test -- --test-name-pattern='赤羽|flower'
 
 当前项目的 `references/examples/chuanma-draw-2026-11.json` 是同一规则边界的独立、可读夹具；它只验证花猪转账矩阵和收支守恒，不声称完成服务器验证。
 
+`third_party/replay-editor/` 是从关联仓库复制的 MIT 授权离线算番源码副本，保留 `LICENSE`、`NOTICE`、来源说明和已知问题记录。修改副本时先运行 `tsc -p third_party/replay-editor/tsconfig.json --noEmit`，再运行 `node scripts/build_replay_editor.mjs` 和 `node scripts/replay_editor_cli.mjs ...` 的固定案例；生成物只放在被忽略的 `.cache/`，不提交转译 JS。
+
 校验器检查唯一技能入口、包内链接与锚点、参考材料可达性、牌例牌数和牌形、第13至17主题内联牌例、符番支付表、结算守恒、终局实例、第四杠事件序列、受入上限、筋／壁搭子关系及历史证据摘录。牌形检查只验证所标明的必要结构，不是完整判役引擎；平台边界见待验证清单。测试还包含无效牌、非法符番、损坏的二进制和文档改错后必须失败的案例。脚本能力边界统一见 [能力矩阵](capability-matrix.md)。
 
 文档中的命名示例块和结构化用例是同一案例的两种表示；校验会检查其一致性。第13至17主题中超过四张的内联牌例须在 `scripts/validate.py` 的 `INLINE_HANDS` 登记其断言的牌形，古役举例表由 `check:guyi-examples` 标记；新增或修改这类牌例时同步登记，否则校验失败。新实例给出和牌前手牌／和牌张／副露、玩法、庄家及实际逐人收支，使用稳定案例编号。

@@ -13,7 +13,7 @@
 | 终局判断 | 文档级实现 | `references/topics/08-match-rules.md` | 校验器会执行文档中的 `judge()`，不读取实时客户端状态 |
 | 第四杠行动时序 | 文档级实现 | `references/examples/gameplay.md` | 验证固定事件序列，不模拟完整牌局 |
 | 立直效率、筋、壁、防守 | 部分实现 | `references/topics/10-12` | 主题提供规则和示例；脚本只核对有限的受入上限与防守表 |
-| 古役、活动、国标完整判番 | 未实现 | `references/topics/14-17` | 文档和证据索引可供解释；版本化夹具只检查登记牌例的结构，不是完整判番器 |
+| 古役、历史活动、国标完整判番 | 已移植算法副本 | `third_party/replay-editor/core/calcFan*.ts`、`scripts/replay_editor_cli.mjs` | 使用 MIT 授权的离线 replay-editor 算法副本；支持固定输入的可执行算番，但仍不等于当前服务器复核；强夺之战（54）与宝牌双刃（55）已有客户端配置和规则文档，但尚未接入算法副本 |
 | 当前服务器／客户端裁定 | 未实现 | — | 需要带版本的实战牌谱或客户端复现；离线测试不能证明此项 |
 | 赤羽花猪流局支付 | 已修复并有回归夹具 | 关联 `majsoul_unity` 的 `calcFlowerPigDeltas()` | 修复全员未听时被外层条件跳过的问题；当前项目保留规则和夹具，关联项目负责运行时实现 |
 
@@ -26,6 +26,9 @@ python3 scripts/mahjong_cli.py score --fu 30 --han 4
 python3 scripts/mahjong_cli.py payments --fu 30 --han 3 --players 4 --dealer 0 --winner 1 --loser 2
 python3 scripts/mahjong_cli.py hand --state complete --hand '123m 456p 789s 111z 22m' --kind standard
 python3 scripts/mahjong_cli.py flower-pig --huazhu true,false,false,false --huled false,false,false,false
+node scripts/build_replay_editor.mjs
+node scripts/replay_editor_cli.mjs --mode guobiao --hand '1112345678999p1p'
 ```
 
 命令输出 JSON，错误返回码为 2。`hand`、`score`、`payments` 和 `flower-pig` 都只调用本仓库已有的确定性检查；它们不会联网，也不会声称完成平台判定。
+Node CLI 输出固定输入下的番种 ID、番值和符数；`--detail-rule` 可传活动规则开关。它依赖 Node.js 20+ 与 `tsc`，运行前必须先构建 `.cache/replay-editor`。
